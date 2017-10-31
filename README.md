@@ -23,6 +23,11 @@ Run without `-d`, because You have to answer to a form in the container.
 docker run -ti --name onedrive -v $HOME/Documents/onedrive/config:/config -v $HOME/Documents/onedrive/data:/onedrive croc/onedrive
 ```
 
+Open the URL (Authorize this app visiting), do the necessary steps (login on the opened site, etc...) and paste the long URL after the login.
+Maybe You see a blank white page, but a long URL in the browser's address bar. Copy this long URL and paste to response URI (Enter the response uri).
+
+That's it. :)
+
 Example:
 ```
 # docker run -ti --name onedrive croc/onedrive
@@ -37,13 +42,13 @@ Creating directory: ./E-mail mellékletek
 ...
 ```
 
-I recommend, restart the container after the sync is started.
+If the sync is started, stop the container with CTRL-C (or with `docker rm -v -f onedrive`), and recreate the container again with some extra parameters.
 
 ### Run
 
 ```
 docker rm -v -f onedrive
-docker run -tid --name onedrive -v $HOME/Documents/onedrive/config:/config -v $HOME/Documents/onedrive/data:/onedrive croc/onedrive
+docker run -tid --name onedrive --restart always -v $HOME/Documents/onedrive/config:/config -v $HOME/Documents/onedrive/data:/onedrive croc/onedrive
 ```
 
 ## Configuration
