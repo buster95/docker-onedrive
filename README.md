@@ -51,6 +51,13 @@ docker rm -v -f onedrive
 docker run -tid --name onedrive --restart always -v $HOME/Documents/onedrive/config:/config -v $HOME/Documents/onedrive/data:/onedrive croc/onedrive
 ```
 
+
+If you need, change the permission of the folders to the user:
+
+```
+usr="<youruser>"; chown -R $usr /home/$usr/Documents/onedrive
+```
+
 ## Configuration
 
 
