@@ -30,13 +30,13 @@ That's it. :)
 
 Example:
 ```
-# docker run -ti --name onedrive croc/onedrive
+# docker run -ti --name onedrive -v $HOME/Documents/onedrive/config:/config croc/onedrive
 
 Authorize this app visiting:
 
 https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=22c49a0d-d21c-4792-aed1-8f163c982546&scope=files.readwrite%20files.readwrite.all%20offline_access&response_type=code&redirect_uri=https://login.microsoftonline.com/common/oauth2/nativeclient
 
-Enter the response uri: https://login.microsoftonline.com/common/oauth2/nativeclient?code=OAQABAAIAAABHh4kmS_aKT5XrjzxRAtHzoSHIBU14P6vaeNCK7-IOmw2VfKsWXV213o7VJA2M-sITUA8SkqdfCyL2-rDost5GN4manBGWA7w9NZb6htzqTIimusmRjbAP5IdmZTLmrl92ZIae9iwir8-Pj8SpHSDNK_ngpGYJvmTRRR5KZGV_OrxWF97UfgT5W82GhDjQwukIvA6r2a5vqhYuBHkn2BcaeEsa92_It6Iy0T0hkqEB75Qp2u7yVfM6cAxdktsi3N1aAZhmGhzqaVvaRfgq6bV3khhNlioAeZq54gOthE8iGH_Gldn0dmEGqAMvpCqjUvG71dLRCne1PJOwwKSoFx17tnRQOZB-ndMpkAAJOZ6G9cbx9FzK0OUew1etsAl9yQbykeGgX6pXWer-_wz1wQnwLsg9Ic8lf_0TyWPYq6IkGXiqkOVz39fzCOoyPPKdMrS8gSr8xVz_87xU8jfUhlJ7obvlzWqAaaK5lWlftVdzPlRYYify5Blwy6IjbMht6tGZuqzWn3QjB0Eap6j2Uu9XykL_YqxCyBIY6rV0bi0j1fWB0nETEQn7CAC79BQege4pMTe2n_RrV3VRHVAsnvweRoi1ll68ePfktwPnUFkPYbBEmF12QOVHE51AhNOBKbgEDHI7wbV_Gc9YDbrj_GDXHe2OCZz9YsYmKipOHGXwgSAA&session_state=6ea77fea-9447-478c-b1d4-0399ec95c623
+Enter the response uri: https://login.microsoftonline.com/common/oauth2/nativeclient?code=M9d34df5b-d304-9606-9f06-38fd6afb76e0 
 Creating directory: ./Mindenkivel megosztva
 Creating directory: ./E-mail mellékletek
 ...
@@ -58,8 +58,18 @@ If you need, change the permission of the folders to the user:
 usr="<youruser>"; chown -R $usr /home/$usr/Documents/onedrive
 ```
 
-## Configuration
+#### Optional parameters
 
+  - `GID` - the default owner's groupID of the syncronized files (default: 1000)
+  - `UID` - the default owner's userID of the syncronized files (default: 1000)
+  - `SYNC_LIST` - you can choose some folders for sync, other folders on your onedrive will be ignored for sync (example: Sync1,My Stuff,Work)
+
+Example:
+```
+docker run -tid --name onedrive --restart always -v $HOME/Documents/onedrive/config:/config -v $HOME/Documents/onedrive/data:/onedrive -e GID=1005 -e UID=1005 -e SYNC_LIST="work,my stuff,Sync1" croc/onedrive
+```
+
+## Configuration
 
 The OneDrive container/clients sync all files basically.
 
