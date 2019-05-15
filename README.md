@@ -20,7 +20,7 @@ If you start first, You should configure first.
 Run without `-d`, because You have to answer to a form in the container.
 
 ```
-docker run -ti --name onedrive -v $HOME/Documents/onedrive/config:/config -v $HOME/Documents/onedrive/data:/onedrive croc/onedrive
+docker run -ti --rm --name onedrive -v $PWD/config:/config croc/onedrive
 ```
 
 Open the URL (Authorize this app visiting), do the necessary steps (login on the opened site, etc...) and paste the long URL after the login.
@@ -30,7 +30,7 @@ That's it. :)
 
 Example:
 ```
-# docker run -ti --name onedrive -v $HOME/Documents/onedrive/config:/config croc/onedrive
+# docker run -ti --rm --name onedrive -v $PWD/config:/config croc/onedrive
 
 Authorize this app visiting:
 
@@ -42,13 +42,13 @@ Creating directory: ./E-mail mellékletek
 ...
 ```
 
-If the sync is started, stop the container with CTRL-C (or with `docker rm -v -f onedrive`), and recreate the container again with some extra parameters.
+If the sync is started, stop the container with CTRL-C (or with `docker rm -v -f onedrive`), and recreate the container again with some extra parameters or with docker-compose file with same config directory.
 
 ### Run
 
 ```
 docker rm -v -f onedrive
-docker run -tid --name onedrive --restart always -v $HOME/Documents/onedrive/config:/config -v $HOME/Documents/onedrive/data:/onedrive croc/onedrive
+docker run -tid --name onedrive --restart always -v $PWD/config:/config -v $PWD/data:/onedrive croc/onedrive
 ```
 
 
@@ -60,13 +60,13 @@ usr="<youruser>"; chown -R $usr /home/$usr/Documents/onedrive
 
 #### Optional parameters
 
-  - `GID` - the default owner's groupID of the syncronized files (default: 1000)
-  - `UID` - the default owner's userID of the syncronized files (default: 1000)
+  - `GROUP_ID` - the default owner's groupID of the syncronized files (default: 1000)
+  - `USER_ID` - the default owner's userID of the syncronized files (default: 1000)
   - `SYNC_LIST` - you can choose some folders for sync, other folders on your onedrive will be ignored for sync (example: Sync1,My Stuff,Work)
 
 Example:
 ```
-docker run -tid --name onedrive --restart always -v $HOME/Documents/onedrive/config:/config -v $HOME/Documents/onedrive/data:/onedrive -e GID=1005 -e UID=1005 -e SYNC_LIST="work,my stuff,Sync1" croc/onedrive
+docker run -tid --name onedrive --restart always -v $HOME/Documents/onedrive/config:/config -v $HOME/Documents/onedrive/data:/onedrive -e GROUP_ID=1005 -e USER_ID=1005 -e SYNC_LIST="work,my stuff,Sync1" croc/onedrive
 ```
 
 ## Configuration

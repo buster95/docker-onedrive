@@ -1,0 +1,13 @@
+version: '2'
+
+services:
+  onedrive:
+    image: croc/onedrive
+    environment:
+      - USER_ID=1000
+      - GROUP_ID=1000
+      - SYNC_LIST="mysync,my stuff,Desktop,work-files"
+    volumes:
+      - './config:/config'
+      - './data:/onedrive'
+    restart: unless-stopped
