@@ -1,14 +1,14 @@
 #!/bin/bash
 
-[ -z $GID ] && { GID=1000; }
-[ -z $UID ] && { UID=1000; }
+[ -z $GROUP_ID ] && { GROUP_ID=1000; }
+[ -z $USER_ID ] && { USER_ID=1000; }
 
 # group for app
 [ $( getent group app | wc -l ) -gt 0 ] && { groupdel app; }
-groupadd -g $GID app
+groupadd -g $GROUP_ID app
 # user
 [ $( getent passwd app | wc -l ) -gt 0 ] && { userdel app; }
-useradd -g app -u $UID -s /bin/bash -m app
+useradd -g app -u $USER_ID -s /bin/bash -m app
 
 if [ ! -z "$SYNC_LIST" ]
 then
@@ -21,7 +21,7 @@ fi
 #[ -d /config ] && { mkdir /config; }
 #[ -d /onedrive ] && { mkdir /onedrive; }
 mkdir -p /{config,onedrive}
-chown -R app:app /config
-chown -R app:app /onedrive
+chown -R $USER_ID:$GROUP_ID /config
+chown -R $USER_ID:$GROUP_ID /onedrive
 su app -c "onedrive --monitor --confdir /config --syncdir /onedrive"
 
